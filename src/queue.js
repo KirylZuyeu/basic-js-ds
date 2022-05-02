@@ -13,21 +13,42 @@ const { NotImplementedError } = require('../extensions/index.js');
  * queue.dequeue(); // returns the top element from queue and deletes it, returns 1
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
-class Queue {
 
-  getUnderlyingList() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+/**
+* Solved with https://habr.com/ru/post/493474/
+*/
+
+class Node {
+  constructor(value) {
+      this.value = value;
+      this.next = null;
+  }
+}
+class Queue {
+  constructor() {
+    this.head = null;
+    this.tail = null;
   }
 
-  enqueue(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  getUnderlyingList() {
+    return this.head;
+  }
+
+  enqueue(value) {
+    const newNode = new Node(value);
+    if (this.head) { // if the first Node exitsts
+      this.tail.next = newNode; // inserts the created node after the tail of our Queue
+      this.tail = newNode; // now the created node is the last node
+  } else { // if there are no nodes in the Queue
+      this.head = newNode; // the created node is a head 
+      this.tail = newNode // also the created node is a tail in Queue because it is single.
+  }
   }
 
   dequeue() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    const current = this.head; // saves the link to the head which we need to remove
+    this.head = this.head.next; // moves the head link to the second Node in the Queue
+    return current.value; // returns the removed Node's value
   }
 }
 
